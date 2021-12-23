@@ -1,0 +1,1 @@
+This is a project of a GO course I'm to revisit the language
