@@ -11,7 +11,7 @@ import (
 func main() {
 	config.LoadEnvironmentVariables()
 
-	fmt.Printf("API Running on port %d\n", config.Port)
+	fmt.Printf("API listening on port %d\n", config.Port)
 
 	r := router.Generate()
 
