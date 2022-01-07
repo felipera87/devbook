@@ -14,4 +14,4 @@ Run `sql/sql.sql` on a mysql cli or ide to create database and tables.
 
 ### Start development API
 
-Install all dependencies, run on a terminal (folder api): `go mod download` 
+Install all dependencies, run on a terminal (folder api): `go mod download` or `go get`
