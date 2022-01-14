@@ -1,6 +1,7 @@
 package models
 
 import (
+	"api/src/security"
 	"errors"
 	"strings"
 	"time"
@@ -18,13 +19,15 @@ type User struct {
 	CreatedAt time.Time `json:"created_at,omitempty"`
 }
 
-// Prepare validates and format all user fields
+// Prepare validates and format all user fields. mode can be "insert" or "update"
 func (user *User) Prepare(mode string) error {
 	if err := user.validate(mode); err != nil {
 		return err
 	}
 
-	user.format()
+	if err := user.format(mode); err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -52,8 +55,19 @@ func (user *User) validate(mode string) error {
 	return nil
 }
 
-func (user *User) format() {
+func (user *User) format(mode string) error {
 	user.Name = strings.TrimSpace(user.Name)
 	user.Nick = strings.TrimSpace(user.Nick)
 	user.Email = strings.TrimSpace(user.Email)
+
+	if mode == "insert" {
+		passwordHash, err := security.Hash(user.Password)
+		if err != nil {
+			return err
+		}
+
+		user.Password = string(passwordHash)
+	}
+
+	return nil
 }
