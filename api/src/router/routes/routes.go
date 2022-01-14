@@ -17,6 +17,7 @@ type Route struct {
 // Configure receives a not configured router and returns it with all routes
 func Configure(r *mux.Router) *mux.Router {
 	routes := userRoutes
+	routes = append(routes, loginRoutes)
 
 	for _, route := range routes {
 		r.HandleFunc(route.URI, route.Handler).Methods(route.Method)

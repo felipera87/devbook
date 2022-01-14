@@ -132,3 +132,27 @@ func (repository Users) Delete(ID uint64) error {
 
 	return nil
 }
+
+// SearchByEmail searches user by email and returns it's hashed password and id
+func (repository Users) SearchByEmail(email string) (models.User, error) {
+	rows, err := repository.db.Query(
+		"select id, password from users where email = ?", email,
+	)
+	if err != nil {
+		return models.User{}, err
+	}
+	defer rows.Close()
+
+	var user models.User
+
+	if rows.Next() {
+		if err = rows.Scan(
+			&user.ID,
+			&user.Password,
+		); err != nil {
+			return models.User{}, err
+		}
+	}
+
+	return user, nil
+}
