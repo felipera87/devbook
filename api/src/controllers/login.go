@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"api/src/authentication"
 	"api/src/database"
 	"api/src/models"
 	"api/src/repositories"
@@ -44,6 +45,6 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Write([]byte("You're logged in. You'll get a token at a later api version."))
-
+	token, _ := authentication.CreateToken(userOnDatabase.ID)
+	w.Write([]byte(token))
 }
