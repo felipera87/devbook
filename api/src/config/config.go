@@ -15,6 +15,9 @@ var (
 
 	// Port where API will listen
 	Port = 0
+
+	// SecretKey is used to sign jwt tokens
+	SecretKey []byte
 )
 
 // LoadEnvironmentVariables initializes environment variables
@@ -35,4 +38,6 @@ func LoadEnvironmentVariables() {
 		os.Getenv("DB_PASS"),
 		os.Getenv("DB_NAME"),
 	)
+
+	SecretKey = []byte(os.Getenv("SECRET_KEY"))
 }
