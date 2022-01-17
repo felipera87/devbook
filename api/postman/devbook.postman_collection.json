@@ -92,6 +92,16 @@
 				{
 					"name": "update user",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -146,7 +156,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									""
+									"pm.environment.set(\"token\", pm.response.text());"
 								],
 								"type": "text/javascript"
 							}
