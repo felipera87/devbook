@@ -107,6 +107,35 @@
 								"method": "GET",
 								"header": [],
 								"url": {
+									"raw": "{{url}}/users/1/following",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"1",
+										"following"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all following",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
 									"raw": "{{url}}/users/1/followers",
 									"host": [
 										"{{url}}"
