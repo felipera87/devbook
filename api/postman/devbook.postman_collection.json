@@ -9,6 +9,120 @@
 			"name": "users",
 			"item": [
 				{
+					"name": "followers",
+					"item": [
+						{
+							"name": "follow user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/users/3/follow",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"3",
+										"follow"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "unfollow",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/users/3/unfollow",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"3",
+										"unfollow"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all followers",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/users/1/followers",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"1",
+										"followers"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "create user",
 					"event": [
 						{
@@ -169,86 +283,6 @@
 							"path": [
 								"users",
 								"{{user_id}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "follow user",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/users/3/follow",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"users",
-								"3",
-								"follow"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "unfollow",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/users/3/unfollow",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"users",
-								"3",
-								"unfollow"
 							]
 						}
 					},
