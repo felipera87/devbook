@@ -47,11 +47,12 @@ func (repository Users) Search(nameOrNick string) ([]models.User, error) {
 		"select id, name, nick, email, created_at from users where name like ? or nick like ?",
 		nameOrNick, nameOrNick,
 	)
-	defer rows.Close()
 
 	if err != nil {
 		return nil, err
 	}
+
+	defer rows.Close()
 
 	var users []models.User
 
@@ -155,4 +156,21 @@ func (repository Users) SearchByEmail(email string) (models.User, error) {
 	}
 
 	return user, nil
+}
+
+// Follow allows a user to follow another one
+func (repository Users) Follow(userID, followerID uint64) error {
+	statement, err := repository.db.Prepare(
+		"insert ignore into followers (user_id, follower_user_id) values (?, ?)",
+	)
+	if err != nil {
+		return err
+	}
+	defer statement.Close()
+
+	if _, err = statement.Exec(userID, followerID); err != nil {
+		return err
+	}
+
+	return nil
 }
