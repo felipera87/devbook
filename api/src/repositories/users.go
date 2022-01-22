@@ -257,3 +257,42 @@ func (repository Users) GetFollowing(userID uint64) ([]models.User, error) {
 
 	return users, nil
 }
+
+// GetPasswordByID returns the hashed password of a given user
+func (repository Users) GetPasswordByID(userID uint64) (string, error) {
+	rows, err := repository.db.Query(`
+		select password from users where id = ?
+	`, userID)
+	if err != nil {
+		return "", err
+	}
+	defer rows.Close()
+
+	var user models.User
+	for rows.Next() {
+		if err = rows.Scan(
+			&user.Password,
+		); err != nil {
+			return "", err
+		}
+	}
+
+	return user.Password, nil
+}
+
+// UpdatePassword updates the user password
+func (repository Users) UpdatePassword(userID uint64, newPassword string) error {
+	statement, err := repository.db.Prepare(
+		"update users set password = ? where id = ?",
+	)
+	if err != nil {
+		return err
+	}
+	defer statement.Close()
+
+	if _, err = statement.Exec(newPassword, userID); err != nil {
+		return err
+	}
+
+	return nil
+}
