@@ -19,7 +19,7 @@ var publicationRoutes = []Route{
 		RequiresAuth: true,
 	},
 	{
-		URI:          "/publications/{publicationId",
+		URI:          "/publications/{publicationId}",
 		Method:       http.MethodGet,
 		Handler:      controllers.SearchPublication,
 		RequiresAuth: true,
