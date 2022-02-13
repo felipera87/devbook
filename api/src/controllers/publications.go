@@ -171,5 +171,42 @@ func UpdatePublication(w http.ResponseWriter, r *http.Request) {
 
 // DeletePublication deletes a publication
 func DeletePublication(w http.ResponseWriter, r *http.Request) {
+	userID, err := authentication.ExtractUserID(r)
+	if err != nil {
+		responses.Error(w, http.StatusUnauthorized, err)
+		return
+	}
 
+	parameters := mux.Vars(r)
+	publicationID, err := strconv.ParseUint(parameters["publicationId"], 10, 64)
+	if err != nil {
+		responses.Error(w, http.StatusBadRequest, err)
+		return
+	}
+
+	db, err := database.Connect()
+	if err != nil {
+		responses.Error(w, http.StatusInternalServerError, err)
+		return
+	}
+	defer db.Close()
+
+	repository := repositories.NewPublicationRepository(db)
+	publicationOnDatabase, err := repository.SearchByID(publicationID)
+	if err != nil {
+		responses.Error(w, http.StatusInternalServerError, err)
+		return
+	}
+
+	if publicationOnDatabase.AuthorID != userID {
+		responses.Error(w, http.StatusForbidden, errors.New("unable to delete a publication from another user"))
+		return
+	}
+
+	if err = repository.Delete(publicationID); err != nil {
+		responses.Error(w, http.StatusInternalServerError, err)
+		return
+	}
+
+	responses.JSON(w, http.StatusNoContent, nil)
 }
