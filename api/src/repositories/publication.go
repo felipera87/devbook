@@ -35,3 +35,34 @@ func (repository Publications) Create(publication models.Publication) (uint64, e
 
 	return uint64(lastInsertedID), nil
 }
+
+// SearchByID gets a single publication from the database
+func (repository Publications) SearchByID(publicationID uint64) (models.Publication, error) {
+	row, err := repository.db.Query(`
+		select p.*, u.nick from
+		publications p inner join users u
+		on u.id = p.author_id where p.id = ?
+	`, publicationID)
+	if err != nil {
+		return models.Publication{}, err
+	}
+	defer row.Close()
+
+	var publication models.Publication
+
+	if row.Next() {
+		if err = row.Scan(
+			&publication.ID,
+			&publication.Title,
+			&publication.Content,
+			&publication.AuthorID,
+			&publication.Likes,
+			&publication.CreatedAt,
+			&publication.AuthorNick,
+		); err != nil {
+			return models.Publication{}, err
+		}
+	}
+
+	return publication, nil
+}
