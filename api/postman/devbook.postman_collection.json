@@ -411,7 +411,7 @@
 								"exec": [
 									"const jsonData = pm.response.json();",
 									"if (jsonData.id) {",
-									"    pm.environment.set(\"user_id\", jsonData.id);",
+									"    pm.environment.set(\"publication_id\", jsonData.id);",
 									"}"
 								],
 								"type": "text/javascript"
@@ -433,13 +433,68 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\": \"Post 1\",\n    \"content\": \"This is post number 1!\"\n}",
+							"raw": "{\n    \"title\": \"Post 1\",\n    \"content\": \"This is post number 1!\"\n}  ",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
+						"url": {
+							"raw": "{{url}}/publications",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"publications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get publication by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/publications/{{publication_id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"publications",
+								"{{publication_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get publications feed",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
 						"url": {
 							"raw": "{{url}}/publications",
 							"host": [
